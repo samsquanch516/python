@@ -1,7 +1,6 @@
-#!/usr/bin/python
-import DataPull, random
+import DataPull
 from threading import Thread
-from queue import Queue
+from Queue import Queue
 
 
 def myFunc(worker, x):
@@ -18,7 +17,7 @@ def threader():
         worker = q.get()
 
         # Run the example job with the avail worker in queue (thread)
-        myFunc(worker, random.randint(1,10))
+        myFunc(worker)
 
         # completed with the job
         q.task_done()
@@ -26,7 +25,7 @@ def threader():
 
 def main():
     # define data loads
-    workloads = ['inventory_dimension', 'dealer_dimension', 'user_dimension','price_dimension','listing_dimension']
+    workloads = ['inventory_dimension']
 
     for x in range(q.maxsize):
         t = Thread(target=threader)
@@ -42,6 +41,9 @@ def main():
 
     # wait until the thread terminates.
     q.join()
+
+    return 0
+
 
 if __name__ == "__main__":
     # define the queue and the maximum number of running threads
