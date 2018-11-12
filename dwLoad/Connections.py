@@ -4,7 +4,7 @@ import psycopg2, datetime
 class Connections:
 
     def __init__(self):
-        self.is_connected = True
+        self.is_connected = False
         self.dw_host = ""
         self.dw_pass = ""
         self.dw_user = ""
