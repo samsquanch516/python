@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import DataPull, random
 from threading import Thread
 from queue import Queue
