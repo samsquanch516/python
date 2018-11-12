@@ -34,3 +34,8 @@ class Connections:
             self.dw_connection.close()
         except Exception as e:
             print(e)
+
+    def query_dw(self):
+        cur = self.dw_connection.cursor()
+        cur.execute("select natural_key from history.inventory_dimension limit 1;")
+        print(cur.fetchall())
