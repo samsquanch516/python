@@ -1,13 +1,14 @@
 import DataPull
+import Dimension
 from threading import Thread
 from Queue import Queue
 
 
-def myFunc(worker, x):
+def myFunc(worker):
     print("Starting: ")
     dataPull = DataPull.DataPull()
-    dataPull.start_data_pull(worker, x)
-    print("complete: " + worker)
+    dataPull.start_data_pull(worker.get_view(), worker.get_schema())
+    print("complete: " + worker.get_view())
 
 
 # The threader thread pulls an worker from the queue and processes it
@@ -24,8 +25,10 @@ def threader():
 
 
 def main():
+    inventory = Dimension.Dimension("inventory_dimension", "history", "inventory_dimension")
+    ecom = Dimension.Dimension("ecom_dimension","history","ecom_dimension")
     # define data loads
-    workloads = ['inventory_dimension']
+    workloads = [inventory,ecom]
 
     for x in range(q.maxsize):
         t = Thread(target=threader)
