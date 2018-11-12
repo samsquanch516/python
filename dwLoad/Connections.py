@@ -12,10 +12,7 @@ class Connections:
         self.dw_connection = self.connect_dw()
 
     def get_is_connected(self):
-        if self.is_connected:
-            print("DB Is Connected")
-        else:
-            print("DB is NOT Connected")
+        return self.is_connected
 
     def connect_dw(self):
         try:
@@ -36,6 +33,9 @@ class Connections:
             print(e)
 
     def query_dw(self):
-        cur = self.dw_connection.cursor()
-        cur.execute("select natural_key from history.inventory_dimension limit 1;")
-        print(cur.fetchall())
+        if self.is_connected:
+            cur = self.dw_connection.cursor()
+            cur.execute("select natural_key from history.inventory_dimension limit 1;")
+            print(cur.fetchall())
+        else:
+            print("Not Connected to DW")
