@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import psycopg2, MySQLdb, datetime
 
 
