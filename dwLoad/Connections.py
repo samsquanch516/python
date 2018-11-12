@@ -1,5 +1,4 @@
-#!/usr/bin/python
-import psycopg2, MySQLdb, datetime
+import psycopg2, datetime
 
 
 class Connections:
@@ -10,8 +9,7 @@ class Connections:
         self.dw_pass = ""
         self.dw_user = ""
         self.dw_name = ""
-
-        connect_dw()
+        self.dw_connection = self.connect_dw()
 
     def get_is_connected(self):
         if self.is_connected:
@@ -22,9 +20,17 @@ class Connections:
     def connect_dw(self):
         try:
             print str(datetime.datetime.now()) + " - Attempting to connect to the Data Warehouse...."
-            psycopg2.connect(dbname=self.dw_name, user=self.dw_user, password=self.dw_pass,
+            c = psycopg2.connect(dbname=self.dw_name, user=self.dw_user, password=self.dw_pass,
                                                        host=self.dw_host,
                                                        port="5439")
             print str(datetime.datetime.now()) + " - Success!"
-        except e as Exception:
-            print (str(datetime.datetime.now()) + " - Failed to connect!")
+            return c
+        except Exception as e:
+            print(str(datetime.datetime.now()) + " - Failed to connect!")
+            print(e)
+
+    def disconnect_dw(self):
+        try:
+            self.dw_connection.close()
+        except Exception as e:
+            print(e)
