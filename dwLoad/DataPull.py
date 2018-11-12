@@ -8,11 +8,11 @@ class DataPull:
         self.db = Connections.Connections()
         self.db.get_is_connected()
 
-    def start_data_pull(self, loading, sleep_time):
-        print("Starting Data Pull: " + loading + " at "+str(sleep_time))
+    def start_data_pull(self, loading):
+        print("Starting Data Pull: " + loading)
         print("Extracted Data")
         print("Loaded Data " + loading)
-        time.sleep(sleep_time)
+        print(self.db.query_dw())
         try:
             self.db.disconnect_dw()
             print("Disconnected from dw")
