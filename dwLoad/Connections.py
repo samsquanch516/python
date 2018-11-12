@@ -4,7 +4,7 @@ import psycopg2, datetime
 class Connections:
 
     def __init__(self):
-        self.is_connected = False
+        self.is_connected = True
         self.dw_host = ""
         self.dw_pass = ""
         self.dw_user = ""
@@ -32,10 +32,10 @@ class Connections:
         except Exception as e:
             print(e)
 
-    def query_dw(self):
+    def query_dw(self, query):
         if self.is_connected:
             cur = self.dw_connection.cursor()
-            cur.execute("select natural_key from history.inventory_dimension limit 1;")
+            cur.execute(query)
             print(cur.fetchall())
         else:
             print("Not Connected to DW")
