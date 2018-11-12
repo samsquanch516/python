@@ -8,14 +8,14 @@ class DataPull:
         self.db = Connections.Connections()
         self.db.get_is_connected()
 
-    def start_data_pull(self, query):
+    def start_data_pull(self, view, schema, table_name=""):
         print("Starting Data Pull: ")
 
         try:
             print("Connecting to DW...")
             self.db.connect_dw()
             print("Extracted Data")
-            print(self.db.query_dw(query))
+            print(self.db.query_dw("select natural_key from %s.%s limit 50;" % (schema, view, )))
             print("Loaded Data ")
             try:
                 self.db.disconnect_dw()
