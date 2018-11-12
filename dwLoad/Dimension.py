@@ -10,3 +10,9 @@ class Dimension(object):
 
     def get_schema(self):
         return self.schema
+
+    def get_stage_table(self):
+        return self.stage_table
+
+    def get_table_name(self):
+        return self.destination_table
