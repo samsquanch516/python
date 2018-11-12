@@ -22,8 +22,8 @@ class Connections:
     def connect_dw(self):
         try:
             print str(datetime.datetime.now()) + " - Attempting to connect to the Data Warehouse...."
-            psycopg2.connect(dbname=dw_name, user=dw_user, password=dw_pass,
-                                                       host=dw_host,
+            psycopg2.connect(dbname=self.dw_name, user=self.dw_user, password=self.dw_pass,
+                                                       host=self.dw_host,
                                                        port="5439")
             print str(datetime.datetime.now()) + " - Success!"
         except e as Exception:
