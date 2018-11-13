@@ -4,7 +4,7 @@ from threading import Thread
 from Queue import Queue
 
 
-def myFunc(worker):
+def beginDataLoad(worker):
     print("Starting: ")
     dataPull = DataPull.DataPull()
     dataPull.start_data_pull(worker.get_view(), worker.get_schema())
@@ -18,17 +18,15 @@ def threader():
         worker = q.get()
 
         # Run the example job with the avail worker in queue (thread)
-        myFunc(worker)
+        beginDataLoad(worker)
 
         # completed with the job
         q.task_done()
 
 
 def main():
-    inventory = Dimension.Dimension("inventory_dimension", "history", "inventory_dimension")
-    ecom = Dimension.Dimension("ecom_dimension","history","ecom_dimension")
-    # define data loads
-    workloads = [inventory,ecom]
+    workloads = [Dimension.Dimension("inventory_dimension", "history", "inventory_dimension"),
+                 Dimension.Dimension("ecom_dimension", "history", "ecom_dimension")]
 
     for x in range(q.maxsize):
         t = Thread(target=threader)
