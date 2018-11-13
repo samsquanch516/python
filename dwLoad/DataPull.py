@@ -6,17 +6,35 @@ class DataPull:
     def __init__(self):
         self.complete = False
         self.db = Connections.Connections()
-        self.db.get_is_connected()
 
     def start_data_pull(self, view, schema, table_name=""):
         print("Starting Data Pull: ")
+        print(view)
 
         try:
-            print("Connecting to DW...")
-            self.db.connect_dw()
-            print("Extracted Data")
-            print(self.db.query_dw("select natural_key from %s.%s limit 50;" % (schema, view, )))
+            if self.db.get_is_db_connected():
+                print("Connected to DB")
+            else:
+                print("Not connected to DB")
+
+            if self.db.get_is_dw_connected():
+                print("Connected to DW")
+            else:
+                print("Not connected to DW")
+
+            try:
+                # pull data
+                print("Extracting Data...")
+                if self.db.get_is_dw_connected():
+                    print("Connected to DW")
+                else:
+                    print("Not connected to DW")
+                print(self.db.query_dw("select natural_key from %s.%s limit 50;" % (schema, view, )))
+            except Exception as e:
+                print(e)
+
             print("Loaded Data ")
+
             try:
                 self.db.disconnect_dw()
                 print("Disconnected from dw")
